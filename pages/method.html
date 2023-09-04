@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let config={
+            basic: {
+                tit: '标题', splitScreen: 6,
+                showFix: [false, true, true, false, false, false, false, false, false], light: true,
+            },
+            camera: {interval:2,precedence:'right',height: 0.5,spacing:1, offset: 0.5, presets:false, presets_set:0.5,horizontal: 0.3,
+                vertical: 0.2,horDeviation:1.1,verDeviation:1.2,horAngle:2.2,verAngle:2.3,horRollback:false,verRollback:true },
+            shearers: {
+                unit:"meters",
+                direction:"up",
+                center_offset:2.2,
+                position_offset:1.2,
+                left_offset: 0.23,
+                right_offset: 0.23,
+                diameter:3.3,
+                jibLength:2.3,
+                left_height_offset:2.3,
+                right_height_offset:2.3,
+                frontHeight:2.3,
+                backHeight:2.3,
+                model:'前高后低',
+                modelSel:'default',
+                length:2.3,
+                source: "以太网"
+            },
+            stent:{
+                 stentWeight: 1.5,
+                stentDirection: 'up',
+                number:10,
+                length:5,
+                slipMax:10,
+                model:'default'
+            },
+            followShe: {
+                gimbal: false, min: 2,max: 9, intervention: 10,
+            },
+
+        };
+        // 通讯参数
+        let position1
+        采煤机运行方向
+
+        
+        //计算量
+        let position2
+    function medthod1(){
+        if(config.shearers.unit=="meters"){
+            position2=position1
+        }else{
+            position2=position1*config.stent.stentWeight
+        }
+    }
+    //计算量
+    let position3
+    function medthod2(){
+        if(config.shearers.direction=="up"){
+            position3=position2
+        }else{
+            position3=config.stent.length-position2
+        }
+    }
+    //计算量
+    let position4
+    function medthod3(){
+        position4=position3+config.shearers.center_offset
+    }
+    //计算量
+    let position5
+    function medthod4(){
+        position5=position4+config.shearers.position_offset
+    }
+    //计算量
+    let position_left
+    function medthod5(){
+        position_left=position5+config.shearers.left_offset
+    }
+    //计算量
+    let position_right
+    function medthod6(){
+        position_right=position5+config.shearers.right_offset
+    }
+    //计算量
+    let cameraArr
+    function medthod7(){
+        let device=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+        let a=Math.ceil(position5/config.stent.stentWeight) 
+        cameraArr=device.slice(a-4,a+5)
+    }
+    function medthod8(){
+        cameraFarmeNum = [{},{},{},{type:'fixed'},{type:'fixed'},{},{},{type:'fixed'},{}]
+    let indexFlag = 0;
+    cameraFarmeNum.forEach( item =>{
+      if(item.type && item.type === 'fixed'){
+        return;
+      }else {
+        item = followCameraData[indexFlag];
+        indexFlag = indexFlag + 1;
+      }
+    })
+    }
+    </script>
+</body>
+</html>
